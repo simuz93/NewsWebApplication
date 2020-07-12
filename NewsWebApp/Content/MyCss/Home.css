@@ -1,0 +1,27 @@
+﻿#create-news-btn-div {
+    margin: 20px;
+}
+
+#create-news-btn-div > #addNews {
+    width: 50%;
+}
+
+.news-div {
+    padding: 2rem 1rem;
+}
+
+.news-header {
+    margin-bottom: 30px;
+}
+
+.news-image > img {
+    width: 100%;
+}
+
+.news-link {
+    margin-top: 20px;
+}
+
+.addNewsBtn, .deleteNewsBtn {
+    width: 100%;
+}

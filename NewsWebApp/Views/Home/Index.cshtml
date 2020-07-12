@@ -1,0 +1,61 @@
+﻿@model System.Collections.Generic.List<NewsWebApp.Models.NewsItem>
+
+@Styles.Render("~/Content/MyCss/Home.css")
+
+<div class="container">
+    <div class="row">
+        <div id="create-news-btn-div" class="col text-center">
+            <button id="addNews" class="btn btn-success" onclick='location.href="@Url.Action("Index", "AddOrEdit")"'>Create</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @foreach (var news in Model)
+    {
+        <div class="jumbotron news-div">
+            <div class="row">
+                <div class="col text-center news-header">
+                    <h2>@news.Title</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 news-image">
+                    <img src="@Url.Content(news.ImagePath)"/>
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col text-justify news-content">
+                            <p>@news.Description</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-left news-publishing-date">
+                            Published: @news.PublishingDatetime.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+                    @if (@news.ExpiringDatetime.HasValue) {
+                    <div class="row">
+                        <div class="col text-left news-expiring-date">
+                                Expiring date: @news.ExpiringDatetime.Value.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+                    }
+                    <div class="row">
+                        <div class="col text-left news-link">
+                            <a href="@news.ExternalLink">@news.ExternalLink</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-10 col-1">
+                    <button class="btn btn-warning text-center addNewsBtn" onclick='location.href="@Url.Action("Edit", "AddOrEdit", new { newsId = news.ID })"'><i class="fas fa-edit"></i></button>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-danger text-center deleteNewsBtn" onclick='location.href="@Url.Action("DeleteNews", "Home", new { newsId = news.ID })"'><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

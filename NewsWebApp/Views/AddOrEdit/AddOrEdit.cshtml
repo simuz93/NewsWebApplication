@@ -1,0 +1,60 @@
+﻿
+@model NewsWebApp.Models.NewsItem
+@Styles.Render("~/Content/MyCss/AddOrEdit.css")
+
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div>
+        <p class="text-danger" id="add-or-edit-error-message">@ViewBag.Error</p>
+    </div>
+}
+
+@using (Html.BeginForm(Model != null && Model.ID > 0 ? "EditNews" : "AddNews", "AddOrEdit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group hidden">
+        @Html.TextBoxFor(m => m.ID)
+        @Html.TextBoxFor(m => m.ImagePath)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)*
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)*
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(m => m.ImageFile)*
+        </div>
+        @if (Model != null && !String.IsNullOrEmpty(Model.ImagePath))
+        {
+            <div class="row">
+                <div class="col">
+                    <label>Current image:</label>
+                    <img src="@Url.Content(Model.ImagePath)" class="current-news-image" />
+                </div>
+            </div>
+        }
+        <div class="row">
+            @Html.TextBoxFor(m => m.ImageFile, null, new { @class = "input-file", @type = "file" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PublishingDatetime)
+        @Html.TextBoxFor(m => m.PublishingDatetime, new { @class = "form-control", @type = "date", @Value = Model != null && Model.PublishingDatetime != default(DateTime) ? Model.PublishingDatetime.ToString("yyyy-MM-dd") : null })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExpiringDatetime)
+        @Html.TextBoxFor(m => m.ExpiringDatetime, new { @class = "form-control", @type = "date", @Value = Model != null && Model.ExpiringDatetime.HasValue ? Model.ExpiringDatetime.Value.ToString("yyyy-MM-dd") : null })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExternalLink)
+        @Html.TextBoxFor(m => m.ExternalLink, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Confirm</button>
+    <button type="button" class="btn btn-danger" onclick='location.href="@Url.Action("Index", "Home")"'>Discard</button>
+}
+
+
